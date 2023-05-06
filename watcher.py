@@ -68,46 +68,54 @@ class NotesWatcher:
         # Push the changes to the remote repository
         subprocess.run(["git", "push"], cwd=self.root_path)
 
+    import os
+    import subprocess
+    from pathlib import Path
+    from typing import List
+
+
     @logf(level='info')
     def update_readme(self) -> str:
-        """ Update the root README.md file with a tree-like structure of the provided Markdown files and directories.
+        """
+        Update the root README.md file with a tree-like structure of the provided Markdown files and directories.
 
         Returns:
             str: the README.md file contents
         """
-
         def find_mds() -> List[str]:
-            return subprocess.check_output(
-                "find . -name '*.md' | sed 's/^\.\///g' | sed '/^README.md$/d'",
-                cwd=self.root_path, text=True, shell=True).splitlines()
+            """Find all markdown files in the directory, excluding README.md"""
+            return [str(path) for path in Path(self.root_path).rglob('*.md') if path.name != "README.md"]
 
         def find_dirs() -> List[str]:
-            return subprocess.check_output(
-                "find . -type d | sed 's/^\.\///g' | sed '/^\./d' | sed '/^venv/d'",
-                cwd=self.root_path, text=True, shell=True).splitlines()
+            """Find all directories in the root path, excluding ones that start with a dot and the 'venv' directory."""
+            return [str(path) for path in Path(self.root_path).rglob('*') if path.is_dir() and not path.name.startswith('.') and not path.name.startswith('venv')]
 
-
+        # Get all markdown files and directories
         mdfiles, dirfiles = find_mds(), find_dirs()
-
         logger.debug(f'mdfiles: {mdfiles} | dirfiles: {dirfiles}')
 
+        # Prepare the lines for the README
+        lines = []
+
+        for directory in sorted(dirfiles):
+            depth = len(Path(directory).parts)
+            title = Path(directory).parts[-1]
+
+            # Write a header for each directory. Depth is used to determine header level.
+            lines.append(f"{'#' * (depth + 1)} {title}")
+
+            # Sort markdown files in directory and add them as list items
+            mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
+
+            for mdfile in mdfiles_in_directory:
+                lines.append(f"[{mdfile}]({mdfile})")
+
+        # Write the contents to the README file
         with open(self.readme_path, "w", encoding='utf8') as readme_file:
-            lines = []
-
-            for directory in sorted(dirfiles):
-                depth = len(Path(directory).parts)
-                title = Path(directory).parts[-1]
-                lines.append(f"{'#' * depth} {title}")
-
-                mdfiles_in_directory = sorted(
-                    [f for f in mdfiles if f.startswith(directory) and not f.endswith("README.md")]
-                )
-
-                for mdfile in mdfiles_in_directory:
-                    lines.append(f"[{mdfile}]({mdfile})")
-
             readme_file.write('\n\n'.join(lines))
+
         return '\n\n'.join(lines)
+
 
 
     @logf(level='debug')

@@ -93,4 +93,3 @@ You can combine multiple options together. Here are some examples:
 1234567 4 -rw-r--r-- 1 user group 567 Jan 01 12:34 ./file1.txt
 2345678 4 -rw-r--r-- 1 user group 789 Jan 01 12:34 ./directory/file2.txt
 ```
-
