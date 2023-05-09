@@ -18,8 +18,4 @@
 
 [unix/shell.md](unix/shell.md)
 
-[unix/unix2/test.md](unix/unix2/test.md)
-
 ## unix2
-
-[unix/unix2/test.md](unix/unix2/test.md)
