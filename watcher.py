@@ -105,8 +105,9 @@ class NotesWatcher:
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
 
             for mdfile in mdfiles_in_directory:
-                lastdir = str(Path(mdfile).parent)
-                if lastdir == title:
+                mdpath = Path(mdfile)
+                mdparent = mdpath.parts[-2]
+                if mdparent == title:
                     lines.append(f"[{mdfile}]({mdfile})")
 
         # Write the contents to the README file

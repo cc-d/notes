@@ -19,3 +19,5 @@
 [unix/shell.md](unix/shell.md)
 
 ## unix2
+
+[unix/unix2/test.md](unix/unix2/test.md)
