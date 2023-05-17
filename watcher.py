@@ -107,12 +107,14 @@ class NotesWatcher:
             for mdfile in mdfiles_in_directory:
                 mdpath = Path(mdfile)
                 mdparent = mdpath.parts[-2]
+                mdname = str(mdpath.parts[-1])[:-2]
                 if mdparent == title:
-                    lines.append(f"[{mdfile}]({mdfile})")
+                    lines.append(f"[{mdname}]({mdfile})")
 
         # Write the contents to the README file
         with open(self.readme_path, "w", encoding='utf8') as readme_file:
-            readme_file.write('\n\n'.join(lines))
+            pass
+            #readme_file.write('\n\n'.join(lines))
 
         return '\n\n'.join(lines)
 
