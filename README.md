@@ -2,6 +2,8 @@
 
 [commands](docker/commands.md)
 
+[docker-compose](docker/docker-compose.md)
+
 [dockerfile](docker/dockerfile.md)
 
 # python
