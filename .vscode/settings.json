@@ -1,0 +1,16 @@
+{
+    // PyLint
+    "pylint.interpreter": [
+        "/home/udesk/.pyenv/versions/3.10.10/bin/python"
+        //"venv/bin/python"
+    ],
+    "pylint.path": [
+        "/home/udesk/.pyenv/versions/3.10.10/bin/pylint"
+        //"venv/bin/pylint"
+    ],
+    "python.analysis.extraPaths": [
+        "venv/lib/",
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+}
