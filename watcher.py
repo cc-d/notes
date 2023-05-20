@@ -99,7 +99,7 @@ class NotesWatcher:
             title = Path(directory).parts[-1]
 
             # Write a header for each directory. Depth is used to determine header level.
-            lines.append(f"\n\n{'#' * depth} {title}\n\n")
+            lines.append(f"\n\n#{(depth - 1) * ' - '} {title}\n\n")
 
             # Sort markdown files in directory and add them as list items
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
