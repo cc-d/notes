@@ -15,3 +15,10 @@
 # -  unix2
 
 **[test](unix/unix2/test.md)**&nbsp;&nbsp;&nbsp;
+
+# vscode
+
+
+
+# -  settings
+
