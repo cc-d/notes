@@ -99,7 +99,7 @@ class NotesWatcher:
             title = Path(directory).parts[-1]
 
             # Write a header for each directory. Depth is used to determine header level.
-            lines.append(f"{'#' * depth} {title}")
+            lines.append(f"\n\n{'#' * depth} {title}\n\n")
 
             # Sort markdown files in directory and add them as list items
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
@@ -109,11 +109,11 @@ class NotesWatcher:
                 mdparent = mdpath.parts[-2]
                 mdname = str(mdpath.parts[-1])[:-3]
                 if mdparent == title:
-                    lines.append(f"[{mdname}]({mdfile})")
+                    lines.append(f"[{mdname}]({mdfile}) ")
 
         # Write the contents to the README file
         with open(self.readme_path, "w", encoding='utf8') as readme_file:
-            readme_file.write('\n\n'.join(lines))
+            readme_file.write(''.join(lines))
 
         return '\n\n'.join(lines)
 
