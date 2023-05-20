@@ -109,7 +109,7 @@ class NotesWatcher:
                 mdparent = mdpath.parts[-2]
                 mdname = str(mdpath.parts[-1])[:-3]
                 if mdparent == title:
-                    lines.append(f"[{mdname}]({mdfile}) ")
+                    lines.append(f"**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
 
         # Write the contents to the README file
         with open(self.readme_path, "w", encoding='utf8') as readme_file:
