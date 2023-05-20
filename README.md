@@ -22,3 +22,4 @@
 
 # -  settings
 
+**[python](vscode/settings/python.md)**&nbsp;&nbsp;&nbsp;
