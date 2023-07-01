@@ -1,9 +1,14 @@
 
 <span style="color: red">- Root</span>
+
 <span style="color: blue">- Level 1</span>
+
 <span style="color: green">- Level 2</span>
+
 <span style="color: orange">- Level 3</span>
+
 <span style="color: purple">- Level 2</span>
+
 <span style="color: blue">- Level 1</span>
 
 - Root
@@ -27,10 +32,15 @@
 
 
 <span style="color: red">- Root</span>
-  <span style="color: blue">- Level 1</span>
+  
+  <span style="color: blue">- Level 1</span>  
+    
     <span style="color: green">- <a href="github.com/repo/Level2.md">Level 2</a></span>
+  
       <span style="color: orange">- Level 3</span>
+    
     <span style="color: green">- <a href="github.com/repo/Level2.md">Level 2</a></span>
+  
   <span style="color: blue">- Level 1</span>
 
 
