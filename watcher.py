@@ -156,6 +156,7 @@ class NotesWatcher:
             if any are detected.
         """
         if self.git_status() != set():
+            logger.info('git_status updated committing')
             action = "Updated"
             self.update_readme()
             self.git_commit_and_push()
