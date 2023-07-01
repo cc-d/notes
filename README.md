@@ -12,13 +12,21 @@
 
 **[commands](docker/commands.md)**&nbsp;&nbsp;&nbsp;**[docker-compose](docker/docker-compose.md)**&nbsp;&nbsp;&nbsp;**[dockerfile](docker/dockerfile.md)**&nbsp;&nbsp;&nbsp;
 
+# git
+
+**[test](git/test.md)**&nbsp;&nbsp;&nbsp;
+
+# -  cmds
+
+**[status](git/cmds/status.md)**&nbsp;&nbsp;&nbsp;
+
 # langs
 
 **[yaml](langs/yaml.md)**&nbsp;&nbsp;&nbsp;
 
 # python
 
-**[publish-pip-package](python/publish-pip-package.md)**&nbsp;&nbsp;&nbsp;
+**[publish-pip-package](python/publish-pip-package.md)**&nbsp;&nbsp;&nbsp;**[subprocess](python/subprocess.md)**&nbsp;&nbsp;&nbsp;
 
 # shells
 

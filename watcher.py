@@ -2,13 +2,27 @@
 import os
 import sys
 import time
+import re
 import subprocess
-from myfuncs import logf
+from logfunc import logf
+from myfuncs import runcmd
 from pathlib import Path
 from typing import Optional, List, Tuple, Set, Dict
 
 import logging
 logger = logging.getLogger()
+
+class Change:
+    @logf(level='info')
+    def __init__(self, action: str, fpath: str):
+        self.action = action
+        self.fpath = fpath
+        logger.info('new action change={} file={}'.format(action, fpath))
+
+    def __repr__(self):
+        if hasattr(self, 'action') and hasattr(self, 'fpath'):
+            return '{}  {}'.format(self.action, self.fpath)
+        return 'Change<pre-__init__>'
 
 
 class NotesWatcher:
@@ -30,43 +44,62 @@ class NotesWatcher:
         self.readme_path = self.root_path / "README.md"
 
     @logf(level='info')
-    def get_files(self) -> Set[str]:
-        """Retrieve a list of newly created Markdown files and non-hidden directories in the root path.
-
-        Returns:
-            Set[str]: A set containing newly created Markdown files and non-hidden directories.
-        """
-        output = subprocess.check_output(["git", "status", "-s"], cwd=self.root_path, text=True)
-        lines = output.splitlines()
-
-        files = set()
-
-        for line in lines:
-            status, path = line[:2], line[3:]
-            if path.endswith(".md") and path != 'README.md':
-                files.add(path)
-            elif os.path.isdir(os.path.join(self.root_path, path)) and not path.startswith('.'):
-                files.add(path + '/')
-
-        return files
-
-    @logf(level='info')
-    def git_commit_and_push(self, action: str, files: Set[str]):
+    def git_commit_and_push(self):
         """Commit the changes to the git repository and push to the remote repository.
 
         Args:
             action (str): The action taken (e.g., created, updated, deleted).
             files (Set[str]): A set containing files to add specifically.
         """
-        # Add the specified files and directories
-        subprocess.run(["git", "add", '.'], cwd=self.root_path)
 
-        # Commit the changes
-        commit_msg = f"{action} {files}"
-        subprocess.run(["git", "commit", "-m", commit_msg], cwd=self.root_path)
+        # detect any changed files using git status -s (that meet criteria)
+        changes = self.git_status()
+        changed = []
+        addfnames = ['watcher.py', 'requirements.txt', 'README.md', 'LICENSE']
+        for change in changes:
+            addfile = False
+            if change in addfnames:
+                addfile = True
+            elif str(change).lower().endswith == '.md':
+                addfile = True
+            elif os.path.isdir(change):
+                addfile = True
 
-        # Push the changes to the remote repository
-        subprocess.run(["git", "push"], cwd=self.root_path)
+            if addfile:
+                runcmd('git add {}'.format(change))
+                changed.append(change)
+
+
+        if changed != []: # at least 1 file change to commit
+            # Commit the changes
+            subprocess.run(["git", "commit", "-m",
+                        'CHANGED FILES: {}'.format(' '.join([c for c in changed]))],
+                        cwd=self.root_path)
+
+            # Push the changes to the remote repository
+            subprocess.run(["git", "push"], cwd=self.root_path)
+
+    @logf(level='info')
+    def git_status(self) -> Set[str]:
+        """ returns a parsed file changes from git status -s """
+        REG = r'^(..) (.*)$'
+
+        @logf(level='info')
+        def get_changes(lines: List[str]) -> Set[str]:
+            changes = set()
+            for line in lines:
+                match = re.search(REG, line)
+                if match is None:
+                    continue
+                left, right = match.groups()
+                left, right = left.strip(), right.strip()
+                change = Change(left, right)
+                changes.add(change.fpath)
+            return changes
+
+        out = runcmd('git status -s')
+        return get_changes(out)
+
 
     @logf(level='info')
     def update_readme(self) -> str:
@@ -117,41 +150,15 @@ class NotesWatcher:
 
         return '\n\n'.join(lines)
 
-
-
-    @logf(level='debug')
-    def changes(self) -> bool:
-        """ Detects .md/dir changes in the notes dir.
-
-        Returns:
-            bool: True if any changes otherwise False
-        """
-        git_status_output = subprocess.check_output(
-            ["git", "status", "-s"], cwd=self.root_path, text=True)
-
-        md_changes = [
-            line.split()[-1] for line in git_status_output.splitlines() if line.endswith(".md")]
-
-        # Changes related to directories
-        dir_changes = [
-            line.split()[-1] for line in git_status_output.splitlines()
-            if os.path.isdir(line.split()[-1])]
-
-        if md_changes == [] and dir_changes == []:
-            return False
-        return True
-
     def run(self):
         """ Main run method, checks the root dir for any changes in dir structure or
             *.md files outside of README.md, and then commits those changed to the git repo
             if any are detected.
         """
-        if self.changes():
+        if self.git_status() != set():
             action = "Updated"
             self.update_readme()
-            files = self.get_files()
-            files.add("README.md")
-            self.git_commit_and_push(action, files)
+            self.git_commit_and_push()
 
     def watch(self):
         """Watch for changes in the root path and update the README.md accordingly."""

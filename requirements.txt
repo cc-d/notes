@@ -1,1 +1,2 @@
-myfuncs
+myfuncs>=1.0.0
+logfunc
