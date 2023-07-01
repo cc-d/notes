@@ -102,11 +102,13 @@ class NotesWatcher:
         out = runcmd('git status -s')
         return get_changes(out)
 
-
     @logf(level='info')
-    def update_readme(self) -> str:
+    def update_readme(self, dry: bool = False) -> str:
         """
         Update the root README.md file with a tree-like structure of the provided Markdown files and directories.
+
+        Args:
+            dry (bool): dry run? if true don't write file just return
 
         Returns:
             str: the README.md file contents
@@ -170,6 +172,20 @@ class NotesWatcher:
             self.run()
             time.sleep(0.5)
 
+    def exec_cmd(self, cmd: Optional[str] = 'run'):
+        """ executes watcher cmd passed to script """
+        cmd = str(cmd).lower()
+
+        if cmd == 'run':
+            self.run()
+        elif cmd == 'dry':
+            self.update_readme(dry=True)
+        elif cmd == 'readme':
+            self.update_readme()
+        elif cmd == 'watch':
+            self.watch()
+        else:
+            raise Exception('No valid command was provided.')
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
@@ -177,10 +193,5 @@ if __name__ == "__main__":
     cmd = str(sys.argv[1]).lower() if len(sys.argv) > 1 else 'run'
 
     watcher = NotesWatcher(root_path)
+    watcher.exec_cmd(cmd)
 
-    if cmd == 'readme':
-        watcher.update_readme()
-    if cmd == 'watch':
-        watcher.watch()
-    else:
-        watcher.run()
