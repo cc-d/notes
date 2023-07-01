@@ -36,7 +36,7 @@ env; echo 'or'; printenv
 ## Local vs Global Environment Variables
 
 
-## Local Variables
+### **Local Variables:**
 
 ```sh
 name="John"
@@ -49,7 +49,7 @@ echo "Count: $count"   # Output: Count: 10
 
 Local variables are limited to the current shell or script and can be used for temporary or intermediate data.
 
-## Global (Environment) Variables
+### **Global (Environment) Variables:**
 
 ```sh
 export PATH="/usr/local/bin:$PATH"
@@ -60,21 +60,12 @@ echo "$PATH"           # Output: /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 echo "$JAVA_HOME"      # Output: /usr/lib/jvm/java-11
 ```
 
-Global (environment) variables are accessible to all shells and child processes. They are commonly used for storing configuration settings or providing information to other processes.
+**Global** (environment) variables are accessible to all shells and child processes. They are commonly used for storing configuration settings or providing information to other processes.
 
 Note that to make a variable global, the `export` command is used along with the assignment. The exported variables can then be accessed in child processes or other shells.
 
-Understanding the distinction between local and global variables helps manage data effectively and tailor their usage based on specific needs within the "sh" shell.
+Understanding the distinction between **local** and **global** variables helps manage data effectively and tailor their usage based on specific needs within the "sh" shell.
 
-## Assigning and Accessing Environment Variables in Scripts
-
-Environment variables can be assigned and accessed in shell scripts.
-
-```sh
-#!/bin/bash
-export VAR="Hello, World!"
-echo $VAR
-```
 
 ## Environment Variable Persistence
 

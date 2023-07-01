@@ -14,6 +14,46 @@ git status [options]
 - `-b` or `--branch`: Displays the current branch and tracking information.
 - `-u` or `--untracked-files`: Shows untracked files in the output.
 
+## Statuses
+
+`??`: Untracked files.
+  ```
+  ?? path/to/untracked_file1
+  ?? path/to/untracked_file2
+  ```
+
+`A `: New file in the working directory.
+  ```
+  A  path/to/new_file
+  ```
+
+` M`: Modifications to file in the working directory.
+  ```
+   M path/to/modified_file
+  ```
+
+`MM`: Modifications to file both in the working directory and the staging area.
+  ```
+  MM path/to/file_with_modifications
+  ```
+
+`R `: Renamed file.
+  ```
+  R  path/to/old_file -> path/to/new_file
+  ```
+
+`D `: Deleted file.
+  ```
+  D  path/to/deleted_file
+  ```
+
+`UU`: File with unresolved merge conflicts.
+  ```
+  UU path/to/file_with_conflicts
+  ```
+
+In these examples, the left side indicates the status of the files, and the right side shows the actual file paths. This representation helps you quickly identify the changes and status of files in the Git repository.
+
 ## Output
 
 The `git status` command can produce various output variations depending on the state of the repository.

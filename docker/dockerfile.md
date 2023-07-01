@@ -1,6 +1,7 @@
 Dockerfile: An Introduction
 Dockerfiles are the building blocks of creating and managing Docker container images. They contain a set of instructions that Docker uses to build a container image. In this documentation, we will cover how Dockerfiles work, commonly used Dockerfile commands, give examples.
 
+
 How Dockerfiles work
 Dockerfiles are plain text files containing a series of commands executed in a specific order. When you run the docker build command, Docker reads the Dockerfile and executes the instructions to create a new container image. Each command in the Dockerfile creates a new layer in the image, which is then cached to optimize the build process. The final container image is an amalgamation of these layers.
 
