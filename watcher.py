@@ -76,7 +76,7 @@ class NotesWatcher:
                         'CHANGED FILES: {}'.format(' '.join([c for c in changed]))],
                         cwd=self.root_path)
 
-            branch = runcmd('git branch --show-current')
+            branch = runcmd('git branch --show-current')[0]
 
             # Push the changes to the remote repository
             subprocess.run(["git", "push", "origin", branch], cwd=self.root_path)
