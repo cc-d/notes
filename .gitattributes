@@ -1,0 +1,2 @@
+# .gitattributes
+*.lock.md filter=git-crypt diff=git-crypt casefold
