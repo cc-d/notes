@@ -1,7 +1,9 @@
-| Hex Code   | Color                          | RGB Value       |
-|------------|--------------------------------|-----------------|
-| #000000    | ![Black](https://via.placeholder.com/50/000000/000000?text=+)                      | RGB(0, 0, 0)     |
-| #333333    | ![Dark Gray](https://via.placeholder.com/50/333333/333333?text=+)                  | RGB(51, 51, 51)   |
-| #808080    | ![Medium Gray](https://via.placeholder.com/50/808080/808080?text=+)                | RGB(128, 128, 128)|
-| #B3B3B3    | ![Light Gray](https://via.placeholder.com/50/B3B3B3/B3B3B3?text=+)                | RGB(179, 179, 179)|
-| #FFFFFF    | ![White](https://via.placeholder.com/50/FFFFFF/FFFFFF?text=+)                      | RGB(255, 255, 255)|
+| Color        | Hex Code | Image                             |
+|--------------|----------|-----------------------------------|
+| Black        | #000000  | ![#000000](https://via.placeholder.com/50/000000/000000) |
+| Dark Gray    | #151515  | ![#151515](https://via.placeholder.com/50/151515/000000) |
+| Medium Gray  | #404040  | ![#404040](https://via.placeholder.com/50/404040/000000) |
+| Medium Gray  | #6A6A6A  | ![#6A6A6A](https://via.placeholder.com/50/6A6A6A/000000) |
+| Light Gray   | #959595  | ![#959595](https://via.placeholder.com/50/959595/000000) |
+| Light Gray   | #D4D4D4  | ![#D4D4D4](https://via.placeholder.com/50/D4D4D4/000000) |
+| White        | #FFFFFF  | ![#FFFFFF](https://via.placeholder.com/50/FFFFFF/000000) |
