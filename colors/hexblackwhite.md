@@ -1,14 +1,12 @@
 | Color Preview                  | Hex Code   |
 |--------------------------------|------------|
 | ![Color](https://via.placeholder.com/50/000000?text=+) | #000000 |
-| ![Color](https://via.placeholder.com/50/1C71C7?text=+) | #1C71C7 |
-| ![Color](https://via.placeholder.com/50/38E38E?text=+) | #38E38E |
-| ![Color](https://via.placeholder.com/50/555555?text=+) | #555555 |
-| ![Color](https://via.placeholder.com/50/71C71C?text=+) | #71C71C |
-| ![Color](https://via.placeholder.com/50/8E38E3?text=+) | #8E38E3 |
+| ![Color](https://via.placeholder.com/50/1A1A1A?text=+) | #1A1A1A |
+| ![Color](https://via.placeholder.com/50/2C2C2C?text=+) | #2C2C2C |
+| ![Color](https://via.placeholder.com/50/3E3E3E?text=+) | #3E3E3E |
+| ![Color](https://via.placeholder.com/50/505050?text=+) | #505050 |
+| ![Color](https://via.placeholder.com/50/626262?text=+) | #626262 |
+| ![Color](https://via.placeholder.com/50/747474?text=+) | #747474 |
+| ![Color](https://via.placeholder.com/50/868686?text=+) | #868686 |
+| ![Color](https://via.placeholder.com/50/989898?text=+) | #989898 |
 | ![Color](https://via.placeholder.com/50/AAAAAA?text=+) | #AAAAAA |
-| ![Color](https://via.placeholder.com/50/C71C71?text=+) | #C71C71 |
-| ![Color](https://via.placeholder.com/50/E38E38?text=+) | #E38E38 |
-| ![Color](https://via.placeholder.com/50/FFFFFF?text=+) | #FFFFFF |
-
-
