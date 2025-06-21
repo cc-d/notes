@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import os
+import os.path as op
 import sys
 import time
 import re
 import subprocess
+from glob import glob
 from logfunc import logf
 from myfuncs import runcmd
 from pathlib import Path
@@ -27,7 +29,8 @@ class Change:
 
 class NotesWatcher:
     """A class to watch for changes in Markdown files and update the root README.md accordingly."""
-    IGNORE_DIRS = ['.', 'venv']
+    IGNORE = ['.', 'venv', 'LICENSE', 'requirements.txt', 'README.md']
+    ICONS = ['📁',  '💡']
 
     def __init__(self, root_path: Optional[str] = None):
         """
@@ -107,46 +110,31 @@ class NotesWatcher:
         """
         Build a nested tree of .md files (excluding README.md) and write a structured README.md.
         """
-        def find_mds() -> List[Path]:
-            """Find all .md files excluding README.md and venv paths"""
-            return [
-                p for p in self.root_path.rglob("*.md")
-                if p.name != "README.md" and "venv" not in p.parts and not any(part.startswith('.') for part in p.parts)
-            ]
+        
+        tree = glob('**', recursive=True)
+        tree = [x for x in tree if not any(x.startswith(bl) for bl in self.IGNORE)]
 
-        def build_tree(paths: List[Path]) -> Dict:
-            """Convert list of Paths into nested tree structure"""
-            tree = {}
-            for path in paths:
-                relative = path.relative_to(self.root_path)
-                parts = list(relative.parts)
-                *dirs, file = parts
-                current = tree
-                for d in dirs:
-                    current = current.setdefault(d, {})
-                current.setdefault('_files', []).append((file, relative))
-            return tree
+        lines = [] 
 
-        def render_tree(tree: Dict, depth: int = 0) -> List[str]:
-            lines = []
-            indent = "  " * depth
-            for key in sorted(k for k in tree if k != '_files'):
-                lines.append(f"{indent}- {key}")
-                lines.extend(render_tree(tree[key], depth + 1))
-            for fname, rel_path in sorted(tree.get('_files', [])):
-                link_text = fname[:-3]  # Strip .md
-                lines.append(f"{indent}  - [{link_text}]({rel_path.as_posix()})")
-            return lines
+        for dirfile in tree:
+            dpath = Path(dirfile)
+            depth = len(dpath.parts)
+            icon = self.ICONS[0] if op.isdir(dirfile) else self.ICONS[1]
+            shortname = dpath.parts[-1]
 
-        mdfiles = find_mds()
-        tree = build_tree(mdfiles)
-        lines = render_tree(tree)
-        content = '\n'.join(lines)
+            if dpath.is_file():
+                shortname = shortname[:-3] if shortname.lower().endswith('.md') else shortname
+            
+
+
+            line = f"{'- ' * depth} {icon} [{shortname}]({op.join(*dpath.parts[:-1], dpath.parts[-1])})"
+
+            lines.append(line)
 
         if not dry:
             with self.readme_path.open("w", encoding="utf-8") as f:
-                f.write(content + '\n')
-        return content
+                f.write('\n'.join(lines) + '\n')
+        return '\n'.join(lines)
 
 
 
@@ -172,4 +160,5 @@ if __name__ == "__main__":
 
     watcher = NotesWatcher(root_path)
     watcher.exec_cmd(cmd)
+
 
