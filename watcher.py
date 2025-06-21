@@ -149,15 +149,13 @@ class NotesWatcher:
                 if mdparent == title:
                     lines.append(f"**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
 
-            if lines:
-
-                # Write the contents to the README file
-                with open(self.readme_path, "w", encoding='utf8') as readme_file:
-                    readme_file.write(''.join(lines))
-
-                return '\n\n'.join(lines)
+        if lines:
+            # Write the contents to the README file
+            with open(self.readme_path, "w", encoding='utf8') as readme_file:
+                readme_file.write(''.join(lines))
+            return '\n\n'.join(lines)
             
-            raise Exception('No lines written to disk.')
+        raise Exception('No lines written to disk.')
 
     def run(self):
         """ Main run method, checks the root dir for any changes in dir structure or

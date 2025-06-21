@@ -1,1 +1,1 @@
-**[hexblackwhite](colors/hexblackwhite.md)**&nbsp;&nbsp;&nbsp;
+**[python](vscode/settings/python.md)**&nbsp;&nbsp;&nbsp;
