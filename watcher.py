@@ -135,12 +135,13 @@ class NotesWatcher:
             depth = directory.count('/') + 1
             title = Path(directory).parts[-1]
 
-            # Write a header for each directory. Depth is used to determine header level.
-            lines.append(f"\n\n#{(depth - 1) * ' - '} {title}\n\n")
 
             # Sort markdown files in directory and add them as list items
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
 
+
+            lines = []
+            
             for mdfile in mdfiles_in_directory:
                 mdpath = Path(mdfile)
                 mdparent = mdpath.parts[-2]
@@ -148,11 +149,15 @@ class NotesWatcher:
                 if mdparent == title:
                     lines.append(f"**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
 
-        # Write the contents to the README file
-        with open(self.readme_path, "w", encoding='utf8') as readme_file:
-            readme_file.write(''.join(lines))
+            if lines:
 
-        return '\n\n'.join(lines)
+                # Write the contents to the README file
+                with open(self.readme_path, "w", encoding='utf8') as readme_file:
+                    readme_file.write(''.join(lines))
+
+                return '\n\n'.join(lines)
+            
+            raise Exception('No lines written to disk.')
 
     def run(self):
         """ Main run method, checks the root dir for any changes in dir structure or
