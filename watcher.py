@@ -139,9 +139,6 @@ class NotesWatcher:
             # Sort markdown files in directory and add them as list items
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
 
-
-            lines = []
-            
             for mdfile in mdfiles_in_directory:
                 mdpath = Path(mdfile)
                 mdparent = mdpath.parts[-2]
@@ -164,16 +161,9 @@ class NotesWatcher:
         """
         if self.git_status() != set():
             logger.info('git_status updated committing')
-            action = "Updated"
             self.update_readme()
             self.git_commit_and_push()
 
-    def watch(self):
-        """Watch for changes in the root path and update the README.md accordingly."""
-
-        while True:
-            self.run()
-            time.sleep(0.5)
 
     def exec_cmd(self, cmd: Optional[str] = 'run'):
         """ executes watcher cmd passed to script """
@@ -186,7 +176,9 @@ class NotesWatcher:
         elif cmd == 'readme':
             self.update_readme()
         elif cmd == 'watch':
-            self.watch()
+            while True:
+                self.run()
+                time.sleep(1)
         else:
             raise Exception('No valid command was provided.')
 
