@@ -1,74 +1,41 @@
- - colors
-
-
-**[hexblackwhite](colors/hexblackwhite.md)**&nbsp;&nbsp;&nbsp;
- - devops
-
- -  - circleci
-
-
-**[config-overview](devops/circleci/config-overview.md)**&nbsp;&nbsp;&nbsp;
- - docker
-
-
-**[commands](docker/commands.md)**&nbsp;&nbsp;&nbsp;
-
-**[docker-compose](docker/docker-compose.md)**&nbsp;&nbsp;&nbsp;
-
-**[dockerfile](docker/dockerfile.md)**&nbsp;&nbsp;&nbsp;
- - git
-
-
-**[test](git/test.md)**&nbsp;&nbsp;&nbsp;
- -  - cmds
-
-
-**[status](git/cmds/status.md)**&nbsp;&nbsp;&nbsp;
- - langs
-
-
-**[yaml](langs/yaml.md)**&nbsp;&nbsp;&nbsp;
- - markdown
-
-
-**[test-github](markdown/test-github.md)**&nbsp;&nbsp;&nbsp;
- - python
-
-
-**[publish-pip-package](python/publish-pip-package.md)**&nbsp;&nbsp;&nbsp;
-
-**[subprocess](python/subprocess.md)**&nbsp;&nbsp;&nbsp;
- - shells
-
-
-**[envvars](shells/envvars.md)**&nbsp;&nbsp;&nbsp;
-
-**[multilines](shells/multilines.md)**&nbsp;&nbsp;&nbsp;
-
-**[operators](shells/operators.md)**&nbsp;&nbsp;&nbsp;
-
-**[shell](shells/shell.md)**&nbsp;&nbsp;&nbsp;
-
-**[variables](shells/variables.md)**&nbsp;&nbsp;&nbsp;
- - test
-
-
-**[t.lock](test/t.lock.md)**&nbsp;&nbsp;&nbsp;
- - unix
-
-
-**[find](unix/find.md)**&nbsp;&nbsp;&nbsp;
-
-**[ls](unix/ls.md)**&nbsp;&nbsp;&nbsp;
-
-**[sed](unix/sed.md)**&nbsp;&nbsp;&nbsp;
- -  - unix2
-
-
-**[test](unix/unix2/test.md)**&nbsp;&nbsp;&nbsp;
- - vscode
-
- -  - settings
-
-
-**[python](vscode/settings/python.md)**&nbsp;&nbsp;&nbsp;
+- chemistry
+  - aluminimum
+      - [reflectivity](chemistry/aluminimum/reflectivity.md)
+- macos
+  - debugging
+      - [common-tools](macos/debugging/common-tools.md)
+      - [dynlibs](macos/debugging/dynlibs.md)
+- os
+  - shells
+    - devops
+      - docker
+        - circleci
+            - [config-overview](os/shells/devops/docker/circleci/config-overview.md)
+          - [commands](os/shells/devops/docker/commands.md)
+          - [docker-compose](os/shells/devops/docker/docker-compose.md)
+          - [dockerfile](os/shells/devops/docker/dockerfile.md)
+      - [envvars](os/shells/envvars.md)
+      - [multilines](os/shells/multilines.md)
+      - [operators](os/shells/operators.md)
+      - [shell](os/shells/shell.md)
+      - [variables](os/shells/variables.md)
+- philosophy
+  - systems
+      - [root](philosophy/systems/root.md)
+- physics
+    - [photon](physics/photon.md)
+- programming
+  - langs
+    - colors
+        - [hexblackwhite](programming/langs/colors/hexblackwhite.md)
+    - python
+      - syntax
+          - [extended-var-unpack-syntax](programming/langs/python/syntax/extended-var-unpack-syntax.md)
+        - [publish-pip-package](programming/langs/python/publish-pip-package.md)
+        - [subprocess](programming/langs/python/subprocess.md)
+      - [yaml](programming/langs/yaml.md)
+- telephoney
+    - [channels](telephoney/channels.md)
+- vscode
+  - settings
+      - [python](vscode/settings/python.md)

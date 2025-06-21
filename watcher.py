@@ -105,85 +105,62 @@ class NotesWatcher:
     @logf(level='info')
     def update_readme(self, dry: bool = False) -> str:
         """
-        Update the root README.md file with a tree-like structure of the provided Markdown files and directories.
-
-        Args:
-            dry (bool): dry run? if true don't write file just return
-
-        Returns:
-            str: the README.md file contents
+        Build a nested tree of .md files (excluding README.md) and write a structured README.md.
         """
-        def find_mds() -> List[str]:
-            """Find all markdown files in the directory, excluding README.md"""
-            return subprocess.check_output(
-                "find . -name '*.md' | sed 's/^\.\///g' | sed '/^README.md$/d'",
-                cwd=self.root_path, text=True, shell=True).splitlines()
+        def find_mds() -> List[Path]:
+            """Find all .md files excluding README.md and venv paths"""
+            return [
+                p for p in self.root_path.rglob("*.md")
+                if p.name != "README.md" and "venv" not in p.parts and not any(part.startswith('.') for part in p.parts)
+            ]
 
-        def find_dirs() -> List[str]:
-            """Find all directories in the root path, excluding ones that start with a dot and the 'venv' directory."""
-            return subprocess.check_output(
-                "find . -type d | sed 's/^\.\///g' | sed '/^\./d' | sed '/^venv/d'",
-                cwd=self.root_path, text=True, shell=True).splitlines()
+        def build_tree(paths: List[Path]) -> Dict:
+            """Convert list of Paths into nested tree structure"""
+            tree = {}
+            for path in paths:
+                relative = path.relative_to(self.root_path)
+                parts = list(relative.parts)
+                *dirs, file = parts
+                current = tree
+                for d in dirs:
+                    current = current.setdefault(d, {})
+                current.setdefault('_files', []).append((file, relative))
+            return tree
 
-        # Get all markdown files and directories
-        mdfiles, dirfiles = find_mds(), find_dirs()
+        def render_tree(tree: Dict, depth: int = 0) -> List[str]:
+            lines = []
+            indent = "  " * depth
+            for key in sorted(k for k in tree if k != '_files'):
+                lines.append(f"{indent}- {key}")
+                lines.extend(render_tree(tree[key], depth + 1))
+            for fname, rel_path in sorted(tree.get('_files', [])):
+                link_text = fname[:-3]  # Strip .md
+                lines.append(f"{indent}  - [{link_text}]({rel_path.as_posix()})")
+            return lines
 
-        logger.debug(f'mdfiles: {mdfiles} | dirfiles: {dirfiles}')
+        mdfiles = find_mds()
+        tree = build_tree(mdfiles)
+        lines = render_tree(tree)
+        content = '\n'.join(lines)
 
-        lines = []
-        for directory in sorted(dirfiles):
-            dpath = Path(directory)
+        if not dry:
+            with self.readme_path.open("w", encoding="utf-8") as f:
+                f.write(content + '\n')
+        return content
 
-            depth = len(dpath.parts)
-            
-            title = Path(directory).parts[-1]
-
-            
-
-            lines.append(' - ' * depth + title + '\n') 
-
-            # Sort markdown files in directory and add them as list items
-            mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
-
-            for mdfile in mdfiles_in_directory:
-                mdpath = Path(mdfile)
-                mdparent = mdpath.parts[-2]
-                mdname = str(mdpath.parts[-1])[:-3]
-                if mdparent == title:
-                    lines.append(f"\n**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
-
-        if lines:
-            # Write the contents to the README file
-            with open(self.readme_path, "w", encoding='utf8') as readme_file:
-                readme_file.write('\n'.join(lines))
-            return '\n\n'.join(lines)
-            
-        raise Exception('No lines written to disk.')
-
-    def run(self):
-        """ Main run method, checks the root dir for any changes in dir structure or
-            *.md files outside of README.md, and then commits those changed to the git repo
-            if any are detected.
-        """
-        if self.git_status() != set():
-            logger.info('git_status updated committing')
-            self.update_readme()
-            self.git_commit_and_push()
 
 
     def exec_cmd(self, cmd: Optional[str] = 'run'):
         """ executes watcher cmd passed to script """
         cmd = str(cmd).lower()
 
-        if cmd == 'run':
-            self.run()
+        if cmd in ['run', 'readme']:
+            self.update_readme()
         elif cmd == 'dry':
             self.update_readme(dry=True)
-        elif cmd == 'readme':
-            self.update_readme()
         elif cmd == 'watch':
             while True:
-                self.run()
+                self.update_readme()
                 time.sleep(1)
         else:
             raise Exception('No valid command was provided.')

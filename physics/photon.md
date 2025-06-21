@@ -1,0 +1,1 @@
+The photon is the smallest quanta of RF phenomena. 
