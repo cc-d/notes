@@ -149,7 +149,7 @@ class NotesWatcher:
         if lines:
             # Write the contents to the README file
             with open(self.readme_path, "w", encoding='utf8') as readme_file:
-                readme_file.write(''.join(lines))
+                readme_file.write('\n'.join(lines))
             return '\n\n'.join(lines)
             
         raise Exception('No lines written to disk.')
