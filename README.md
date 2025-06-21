@@ -1,22 +1,74 @@
+ - colors
+
+
 **[hexblackwhite](colors/hexblackwhite.md)**&nbsp;&nbsp;&nbsp;
+ - devops
+
+ -  - circleci
+
+
 **[config-overview](devops/circleci/config-overview.md)**&nbsp;&nbsp;&nbsp;
+ - docker
+
+
 **[commands](docker/commands.md)**&nbsp;&nbsp;&nbsp;
+
 **[docker-compose](docker/docker-compose.md)**&nbsp;&nbsp;&nbsp;
+
 **[dockerfile](docker/dockerfile.md)**&nbsp;&nbsp;&nbsp;
+ - git
+
+
 **[test](git/test.md)**&nbsp;&nbsp;&nbsp;
+ -  - cmds
+
+
 **[status](git/cmds/status.md)**&nbsp;&nbsp;&nbsp;
+ - langs
+
+
 **[yaml](langs/yaml.md)**&nbsp;&nbsp;&nbsp;
+ - markdown
+
+
 **[test-github](markdown/test-github.md)**&nbsp;&nbsp;&nbsp;
+ - python
+
+
 **[publish-pip-package](python/publish-pip-package.md)**&nbsp;&nbsp;&nbsp;
+
 **[subprocess](python/subprocess.md)**&nbsp;&nbsp;&nbsp;
+ - shells
+
+
 **[envvars](shells/envvars.md)**&nbsp;&nbsp;&nbsp;
+
 **[multilines](shells/multilines.md)**&nbsp;&nbsp;&nbsp;
+
 **[operators](shells/operators.md)**&nbsp;&nbsp;&nbsp;
+
 **[shell](shells/shell.md)**&nbsp;&nbsp;&nbsp;
+
 **[variables](shells/variables.md)**&nbsp;&nbsp;&nbsp;
+ - test
+
+
 **[t.lock](test/t.lock.md)**&nbsp;&nbsp;&nbsp;
+ - unix
+
+
 **[find](unix/find.md)**&nbsp;&nbsp;&nbsp;
+
 **[ls](unix/ls.md)**&nbsp;&nbsp;&nbsp;
+
 **[sed](unix/sed.md)**&nbsp;&nbsp;&nbsp;
+ -  - unix2
+
+
 **[test](unix/unix2/test.md)**&nbsp;&nbsp;&nbsp;
+ - vscode
+
+ -  - settings
+
+
 **[python](vscode/settings/python.md)**&nbsp;&nbsp;&nbsp;

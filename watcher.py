@@ -132,9 +132,15 @@ class NotesWatcher:
 
         lines = []
         for directory in sorted(dirfiles):
-            depth = directory.count('/') + 1
+            dpath = Path(directory)
+
+            depth = len(dpath.parts)
+            
             title = Path(directory).parts[-1]
 
+            
+
+            lines.append(' - ' * depth + title + '\n') 
 
             # Sort markdown files in directory and add them as list items
             mdfiles_in_directory = sorted([f for f in mdfiles if f.startswith(directory)])
@@ -144,7 +150,7 @@ class NotesWatcher:
                 mdparent = mdpath.parts[-2]
                 mdname = str(mdpath.parts[-1])[:-3]
                 if mdparent == title:
-                    lines.append(f"**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
+                    lines.append(f"\n**[{mdname}]({mdfile})**&nbsp;&nbsp;&nbsp;")
 
         if lines:
             # Write the contents to the README file
