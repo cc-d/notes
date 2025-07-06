@@ -6,16 +6,42 @@ import time
 import re
 import subprocess
 from glob import glob
-from logfunc import logf
-from myfuncs import runcmd
+
+import typing as TYPE
+from shlex import split as shx_split
+from subprocess import run as sp_run, CompletedProcess
+
+
+def runcmd(
+    cmd: TYPE.Union[str, TYPE.List], output: bool = True, *args, **kwargs
+) -> TYPE.Optional[CompletedProcess]:
+    """Runs a single command in the shell with subprocess.run
+    Args:
+        cmd (Union[str, List]): The command to run in the shell.
+        output (bool): Whether or not to return the output of the command.
+            Defaults to True.
+    """
+    if isinstance(cmd, str):
+        cmd = shx_split(cmd)
+
+    if output:
+        return sp_run(
+            cmd, check=True, text=True, capture_output=True, *args, **kwargs
+        )
+    else:
+        sp_run(
+            cmd, check=False, text=False, capture_output=False, *args, **kwargs
+        )
+
 from pathlib import Path
 from typing import Optional, List, Tuple, Set, Dict
+
+
 
 import logging
 logger = logging.getLogger()
 
 class Change:
-    @logf(level='info')
     def __init__(self, action: str, fpath: str):
         self.action = action
         self.fpath = fpath
@@ -46,7 +72,6 @@ class NotesWatcher:
 
         self.readme_path = self.root_path / "README.md"
 
-    @logf(level='info')
     def git_commit_and_push(self):
         """Commit the changes to the git repository and push to the remote repository.
 
@@ -84,12 +109,10 @@ class NotesWatcher:
             # Push the changes to the remote repository
             subprocess.run(["git", "push", "origin", branch], cwd=self.root_path)
 
-    @logf(level='info')
     def git_status(self) -> Set[str]:
         """ returns a parsed file changes from git status -s """
         REG = r'^(..) (.*)$'
 
-        @logf(level='info')
         def get_changes(lines: List[str]) -> Set[str]:
             changes = set()
             for line in lines:
@@ -105,7 +128,6 @@ class NotesWatcher:
         out = runcmd('git status -s')
         return get_changes(out)
 
-    @logf(level='info')
     def update_readme(self, dry: bool = False) -> str:
         """
         Build a nested tree of .md files (excluding README.md) and write a structured README.md.
@@ -130,6 +152,7 @@ class NotesWatcher:
             line = f"{'- ' * depth} {icon} [{shortname}]({op.join(*dpath.parts[:-1], dpath.parts[-1])})"
 
             lines.append(line)
+            print(line)
 
         if not dry:
             with self.readme_path.open("w", encoding="utf-8") as f:
